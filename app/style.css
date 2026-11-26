@@ -1,235 +1,92 @@
-/* Australia in Numbers — styles.
-   Original teal / sand / ochre design. System fonts only, no images
-   and no external requests, so the page renders identically offline.
-   Every rule below is layout or colour for a class used by
-   index.html or drawn by views.js; the class names are part of the
-   page contract, so they stay exactly as they are. */
-
-/* Palette and shared measurements. --teal is the dark header/footer
-   green, --teal-2 the link and bar colour, --ochre the accent used
-   for rules, highlights and the callout edge. */
+/* Australia in Numbers — fully offline, system fonts only, no external resources. */
 :root {
-  --ink: #14201e;
-  --ink-soft: #3d4a47;
-  --muted: #6b7a76;
-  --paper: #f7f4ec;
-  --card: #fffdf7;
-  --line: #ddd5c2;
-  --teal: #0b3d3a;
-  --teal-2: #14655f;
-  --ochre: #c08a1e;
-  --ochre-soft: #f3e3bd;
-  --green: #2e7d4f;
-  --red: #a33b2e;
-  --radius: 14px;
-  --shadow: 0 1px 2px rgba(20, 32, 30, .07), 0 8px 24px rgba(20, 32, 30, .07);
+  --ink: #1c2333;
+  --muted: #5b6472;
+  --line: #d9dee6;
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --accent: #0b6e4f;
+  --accent-soft: #e3f2ec;
+  --c1: #0b6e4f;
+  --c2: #c98a1b;
+  --c3: #2f6fb2;
+  --c4: #8a4b9e;
+  --c5: #b23a48;
+  --c6: #4d7c8a;
 }
-
-/* Base: border-box everywhere, smooth anchor scrolling, the paper
-   background and the system sans stack for body copy. */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: var(--paper);
+  font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  background: var(--bg);
   line-height: 1.55;
 }
-
-/* Headings use the serif stack; the .serif class lets inline spans
-   match them. */
-h1, h2, h3, .serif {
-  font-family: Georgia, "Times New Roman", serif;
-  line-height: 1.15;
-  margin: 0 0 .5rem;
+.app { max-width: 960px; margin: 0 auto; padding: 0 16px 48px; }
+.hero { padding: 40px 8px 8px; }
+.kicker { color: var(--accent); font-weight: 700; letter-spacing: 0.12em; font-size: 0.8rem; margin: 0 0 8px; }
+h1 { font-size: 2.4rem; line-height: 1.1; margin: 0 0 8px; }
+.tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 4px; }
+.updated { font-size: 0.85rem; color: var(--muted); margin: 0 0 20px; }
+.toc { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.toc a {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 14px; color: var(--accent); text-decoration: none; font-size: 0.9rem;
 }
-
-a { color: var(--teal-2); }
-
-/* A thick ochre ring for keyboard users on every focusable control. */
-a:focus-visible, button:focus-visible, select:focus-visible, th:focus-visible {
-  outline: 3px solid var(--ochre);
-  outline-offset: 2px;
-}
-
-/* The centred content column used by the header, the sections and
-   the footer. */
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-
-/* Header. The masthead and the nav share the dark teal band; the
-   nav sits directly under it with no gap, so they read as one bar.
-   The brand is the site name, with "Numbers" picked out in ochre. */
-.masthead {
-  background: var(--teal);
-  color: #f2ede0;
-  padding: 18px 0 0;
-}
-.masthead .wrap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; }
-.brand { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
-.brand em { color: var(--ochre); font-style: normal; }
-.tagline { color: #c9d8d3; font-size: .92rem; margin: 0; }
-
-/* Section navigation. Tabs sit on the teal band; the active one is
-   filled with the page paper colour and underlined in ochre, which
-   is what makes the current section readable — light text on the
-   teal would vanish against a light tab. */
-nav.main { background: var(--teal); padding: 12px 0 0; }
-nav.main .wrap { display: flex; flex-wrap: wrap; gap: 4px; padding-bottom: 0; }
-nav.main a {
-  color: #d7e2dd;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 8px 8px 0 0;
-  font-size: .95rem;
-  border-bottom: 3px solid transparent;
-}
-nav.main a:hover { color: #fff; background: rgba(255, 255, 255, .08); }
-nav.main a.active { color: var(--teal); background: var(--paper); border-bottom-color: var(--ochre); font-weight: 600; }
-
-/* Hero. The big teal headline with the lede underneath, plus the
-   small grey "updated" line that carries the build date. */
-.hero { padding: 34px 0 8px; }
-.hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); color: var(--teal); }
-.hero p.lede { font-size: 1.12rem; color: var(--ink-soft); max-width: 62ch; margin: .4rem 0 0; }
-.updated { color: var(--muted); font-size: .85rem; margin-top: 10px; }
-
-/* Stat cards. Three across on desktop; each card carries one big
-   serif number, a heading and a short line of context. The delta
-   classes colour a rise green and a fall red. */
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 22px 0; }
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 18px 18px 14px;
-}
-.card .num { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; color: var(--teal); line-height: 1.1; }
-.card .num small { font-size: 1rem; color: var(--muted); font-weight: 400; }
-.card h3 { font-size: 1rem; margin: .35rem 0 .2rem; font-family: inherit; font-weight: 700; }
-.card p { margin: 0; color: var(--ink-soft); font-size: .92rem; }
-.card .delta-up { color: var(--green); font-weight: 700; }
-.card .delta-down { color: var(--red); font-weight: 700; }
-
-/* Sections. A page is one hash-routed section; its heading gets the
-   ochre rule underneath. .grid2 puts two panels side by side, and
-   .panel is the white card that holds a chart or a block of text.
-   .src is the small source line at the foot of a panel. */
-section.page { padding: 26px 0 10px; }
-section.page h2 { font-size: 1.7rem; color: var(--teal); border-bottom: 3px solid var(--ochre); padding-bottom: 8px; }
-section.page .intro { color: var(--ink-soft); max-width: 68ch; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.toc a:hover { background: var(--accent-soft); }
 .panel {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 18px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 24px 28px; margin: 0 0 20px;
 }
-.panel h3 { font-size: 1.12rem; color: var(--teal); }
-.panel p { color: var(--ink-soft); font-size: .95rem; }
-.panel .src { font-size: .8rem; color: var(--muted); margin-top: 10px; }
-.figure-note { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+.panel h2 { font-size: 1.5rem; margin: 0 0 12px; border-bottom: 3px solid var(--accent); padding-bottom: 8px; }
+.panel h3 { font-size: 1.1rem; margin: 24px 0 8px; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+.stat { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.stat-value { font-size: 1.7rem; font-weight: 800; color: var(--accent); line-height: 1.15; }
+.stat-label { font-weight: 700; margin-top: 2px; }
+.stat-note { font-size: 0.85rem; color: var(--muted); }
 
-/* Charts. The SVGs are built by views.js; these rules colour them.
-   .bar is the default teal, .alt ochre for a highlighted series and
-   .neg red for negative values. .lbl is a row or axis label, .val a
-   bold value label in ink. The donut centre text is serif and teal. */
-.chart { width: 100%; height: auto; display: block; }
-.chart .bar { fill: var(--teal-2); }
-.chart .bar.alt { fill: var(--ochre); }
-.chart .bar.neg { fill: var(--red); }
-.chart .axis { stroke: var(--line); stroke-width: 1; }
-.chart text { font-family: inherit; fill: var(--ink-soft); }
-.chart .lbl { font-size: 12px; }
-.chart .val { font-size: 12px; font-weight: 700; fill: var(--ink); }
-.donut-center { font-family: Georgia, serif; font-weight: 700; fill: var(--teal); }
-
-/* Legend. Swatch plus "Label — value" per slice, wrapping onto
-   further lines when the panel is narrow. */
-.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; color: var(--ink-soft); margin-top: 8px; }
-.legend .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
-
-/* Controls. The row holding the GDP toggle, the state select and
-   the sort buttons. A pressed toggle is filled teal with white
-   text; the .seg group joins its buttons into one pill with no
-   gaps between them. */
-.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }
-.controls label { font-weight: 600; font-size: .95rem; }
-select, button.toggle {
-  font: inherit;
-  padding: 8px 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--ink);
-  cursor: pointer;
-}
-button.toggle[aria-pressed="true"] { background: var(--teal); color: #fff; border-color: var(--teal); }
-#gdp-toggle button[aria-pressed="true"] { background: var(--teal); color: #fff; border-color: var(--teal); }
-.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.seg button { border: 0; background: #fff; padding: 8px 14px; font: inherit; cursor: pointer; }
-.seg button[aria-pressed="true"] { background: var(--teal); color: #fff; }
-
-/* Tables. The states table: teal header row with white text,
-   a light row hover, and right-aligned tabular numerals for the
-   figure columns. The heading buttons are unstyled so the whole
-   header cell behaves as the sort control; the ↕ mark shows a
-   column can be sorted. .table-wrap lets a wide table scroll
-   sideways on a phone instead of breaking the layout. */
-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
-th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
-th { background: var(--teal); color: #fff; font-weight: 600; }
-th button { all: unset; cursor: pointer; color: #fff; font-weight: 600; }
-th button::after { content: " ↕"; opacity: .7; }
-tbody tr:hover { background: #f3ecda; }
-td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-.table-wrap { overflow-x: auto; }
-
-/* Callout. A pale ochre box with a solid ochre left edge, used for
-   the one-sentence takeaway in a section. */
+.chart { width: 100%; height: auto; display: block; margin: 8px 0 16px; }
+.chart-label { font-size: 13px; fill: var(--ink); font-family: inherit; }
+.chart-value { font-size: 13px; font-weight: 700; fill: var(--ink); font-family: inherit; }
+.bar { fill: var(--c3); }
+.line-a { stroke: var(--c1); stroke-width: 3; }
+.line-b { stroke: var(--c2); stroke-width: 3; stroke-dasharray: 7 4; }
+.dot-a { fill: var(--c1); }
+.dot-b { fill: var(--c2); }
+.donut-wrap { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin: 8px 0 16px; }
+.donut { width: 220px; height: 220px; }
+.donut-centre { font-size: 26px; font-weight: 800; fill: var(--ink); }
+.donut-sub { font-size: 13px; fill: var(--muted); }
+.legend { list-style: none; padding: 0; margin: 0; }
+.legend li { margin: 6px 0; font-size: 0.95rem; }
+.swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; vertical-align: -2px; }
+.data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.95rem; }
+.data-table th, .data-table td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+.data-table th { background: var(--bg); font-weight: 700; }
+.data-table th[data-sort] { cursor: pointer; }
+.data-table th[data-sort]:hover { color: var(--accent); }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.sources-table td { vertical-align: top; }
+.hint { font-size: 0.85rem; color: var(--muted); font-style: italic; }
 .callout {
-  background: var(--ochre-soft);
-  border-left: 5px solid var(--ochre);
-  border-radius: 0 10px 10px 0;
-  padding: 14px 18px;
-  margin: 16px 0;
-  color: var(--ink);
+  background: var(--accent-soft); border-left: 4px solid var(--accent);
+  padding: 14px 18px; border-radius: 0 8px 8px 0; font-weight: 600;
 }
-.callout strong { color: var(--teal); }
-
-/* Sources page. Each entry is one list item: the figure name in
-   bold, then the publisher and release in softer text. */
-.sources li { margin-bottom: 10px; }
-.sources .fig { font-weight: 700; }
-.sources .pub { color: var(--ink-soft); }
-
-/* Footer. Dark teal like the header, with pale text and white links. */
-footer.site {
-  margin-top: 34px;
-  background: var(--teal);
-  color: #c9d8d3;
-  padding: 22px 0 30px;
-  font-size: .88rem;
+.control-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0 8px; }
+.control-row label { font-weight: 700; }
+.control-row select {
+  font: inherit; padding: 8px 10px; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--panel); color: var(--ink); max-width: 100%;
 }
-footer.site a { color: #fff; }
-footer.site p { margin: .3rem 0; }
-
-/* Sections the router hides. */
-.hidden { display: none !important; }
-
-/* Responsive. Below 900px the cards go two across and the
-   two-column grids stack. Below 560px the cards go single column,
-   the brand shrinks and the nav tabs get tighter. */
-@media (max-width: 900px) {
-  .cards { grid-template-columns: 1fr 1fr; }
-  .grid2 { grid-template-columns: 1fr; }
-}
-@media (max-width: 560px) {
-  .cards { grid-template-columns: 1fr; }
-  .brand { font-size: 1.25rem; }
-  nav.main a { padding: 7px 9px; font-size: .88rem; }
-  .card .num { font-size: 1.7rem; }
+.state-detail { margin: 8px 0; }
+footer { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 8px 0 0; }
+.noscript { background: #fff3cd; border: 1px solid #e0a800; padding: 16px; border-radius: 8px; }
+@media (max-width: 640px) {
+  h1 { font-size: 1.9rem; }
+  .panel { padding: 18px; }
+  .stat-value { font-size: 1.4rem; }
+  .data-table { font-size: 0.85rem; }
+  .data-table th, .data-table td { padding: 6px; }
 }
