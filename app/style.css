@@ -1,4 +1,13 @@
-/* Australia in Numbers — styles. Original design, system fonts only, no external requests. */
+/* Australia in Numbers — styles.
+   Original teal / sand / ochre design. System fonts only, no images
+   and no external requests, so the page renders identically offline.
+   Every rule below is layout or colour for a class used by
+   index.html or drawn by views.js; the class names are part of the
+   page contract, so they stay exactly as they are. */
+
+/* Palette and shared measurements. --teal is the dark header/footer
+   green, --teal-2 the link and bar colour, --ochre the accent used
+   for rules, highlights and the callout edge. */
 :root {
   --ink: #14201e;
   --ink-soft: #3d4a47;
@@ -15,6 +24,9 @@
   --radius: 14px;
   --shadow: 0 1px 2px rgba(20, 32, 30, .07), 0 8px 24px rgba(20, 32, 30, .07);
 }
+
+/* Base: border-box everywhere, smooth anchor scrolling, the paper
+   background and the system sans stack for body copy. */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -25,19 +37,30 @@ body {
   font-size: 16px;
   line-height: 1.55;
 }
+
+/* Headings use the serif stack; the .serif class lets inline spans
+   match them. */
 h1, h2, h3, .serif {
   font-family: Georgia, "Times New Roman", serif;
   line-height: 1.15;
   margin: 0 0 .5rem;
 }
+
 a { color: var(--teal-2); }
+
+/* A thick ochre ring for keyboard users on every focusable control. */
 a:focus-visible, button:focus-visible, select:focus-visible, th:focus-visible {
   outline: 3px solid var(--ochre);
   outline-offset: 2px;
 }
+
+/* The centred content column used by the header, the sections and
+   the footer. */
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
 
-/* Header */
+/* Header. The masthead and the nav share the dark teal band; the
+   nav sits directly under it with no gap, so they read as one bar.
+   The brand is the site name, with "Numbers" picked out in ochre. */
 .masthead {
   background: var(--teal);
   color: #f2ede0;
@@ -47,6 +70,11 @@ a:focus-visible, button:focus-visible, select:focus-visible, th:focus-visible {
 .brand { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; color: #fff; text-decoration: none; }
 .brand em { color: var(--ochre); font-style: normal; }
 .tagline { color: #c9d8d3; font-size: .92rem; margin: 0; }
+
+/* Section navigation. Tabs sit on the teal band; the active one is
+   filled with the page paper colour and underlined in ochre, which
+   is what makes the current section readable — light text on the
+   teal would vanish against a light tab. */
 nav.main { background: var(--teal); padding: 12px 0 0; }
 nav.main .wrap { display: flex; flex-wrap: wrap; gap: 4px; padding-bottom: 0; }
 nav.main a {
@@ -60,13 +88,16 @@ nav.main a {
 nav.main a:hover { color: #fff; background: rgba(255, 255, 255, .08); }
 nav.main a.active { color: var(--teal); background: var(--paper); border-bottom-color: var(--ochre); font-weight: 600; }
 
-/* Hero */
+/* Hero. The big teal headline with the lede underneath, plus the
+   small grey "updated" line that carries the build date. */
 .hero { padding: 34px 0 8px; }
 .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); color: var(--teal); }
 .hero p.lede { font-size: 1.12rem; color: var(--ink-soft); max-width: 62ch; margin: .4rem 0 0; }
 .updated { color: var(--muted); font-size: .85rem; margin-top: 10px; }
 
-/* Stat cards */
+/* Stat cards. Three across on desktop; each card carries one big
+   serif number, a heading and a short line of context. The delta
+   classes colour a rise green and a fall red. */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 22px 0; }
 .card {
   background: var(--card);
@@ -82,7 +113,10 @@ nav.main a.active { color: var(--teal); background: var(--paper); border-bottom-
 .card .delta-up { color: var(--green); font-weight: 700; }
 .card .delta-down { color: var(--red); font-weight: 700; }
 
-/* Sections */
+/* Sections. A page is one hash-routed section; its heading gets the
+   ochre rule underneath. .grid2 puts two panels side by side, and
+   .panel is the white card that holds a chart or a block of text.
+   .src is the small source line at the foot of a panel. */
 section.page { padding: 26px 0 10px; }
 section.page h2 { font-size: 1.7rem; color: var(--teal); border-bottom: 3px solid var(--ochre); padding-bottom: 8px; }
 section.page .intro { color: var(--ink-soft); max-width: 68ch; }
@@ -99,7 +133,10 @@ section.page .intro { color: var(--ink-soft); max-width: 68ch; }
 .panel .src { font-size: .8rem; color: var(--muted); margin-top: 10px; }
 .figure-note { font-size: .85rem; color: var(--muted); margin-top: 6px; }
 
-/* Charts (SVG built by JS) */
+/* Charts. The SVGs are built by views.js; these rules colour them.
+   .bar is the default teal, .alt ochre for a highlighted series and
+   .neg red for negative values. .lbl is a row or axis label, .val a
+   bold value label in ink. The donut centre text is serif and teal. */
 .chart { width: 100%; height: auto; display: block; }
 .chart .bar { fill: var(--teal-2); }
 .chart .bar.alt { fill: var(--ochre); }
@@ -109,10 +146,16 @@ section.page .intro { color: var(--ink-soft); max-width: 68ch; }
 .chart .lbl { font-size: 12px; }
 .chart .val { font-size: 12px; font-weight: 700; fill: var(--ink); }
 .donut-center { font-family: Georgia, serif; font-weight: 700; fill: var(--teal); }
+
+/* Legend. Swatch plus "Label — value" per slice, wrapping onto
+   further lines when the panel is narrow. */
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; color: var(--ink-soft); margin-top: 8px; }
 .legend .sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
 
-/* Controls */
+/* Controls. The row holding the GDP toggle, the state select and
+   the sort buttons. A pressed toggle is filled teal with white
+   text; the .seg group joins its buttons into one pill with no
+   gaps between them. */
 .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }
 .controls label { font-weight: 600; font-size: .95rem; }
 select, button.toggle {
@@ -130,7 +173,12 @@ button.toggle[aria-pressed="true"] { background: var(--teal); color: #fff; borde
 .seg button { border: 0; background: #fff; padding: 8px 14px; font: inherit; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--teal); color: #fff; }
 
-/* Tables */
+/* Tables. The states table: teal header row with white text,
+   a light row hover, and right-aligned tabular numerals for the
+   figure columns. The heading buttons are unstyled so the whole
+   header cell behaves as the sort control; the ↕ mark shows a
+   column can be sorted. .table-wrap lets a wide table scroll
+   sideways on a phone instead of breaking the layout. */
 table { width: 100%; border-collapse: collapse; font-size: .95rem; }
 th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
 th { background: var(--teal); color: #fff; font-weight: 600; }
@@ -140,7 +188,8 @@ tbody tr:hover { background: #f3ecda; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .table-wrap { overflow-x: auto; }
 
-/* Callout */
+/* Callout. A pale ochre box with a solid ochre left edge, used for
+   the one-sentence takeaway in a section. */
 .callout {
   background: var(--ochre-soft);
   border-left: 5px solid var(--ochre);
@@ -151,11 +200,13 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 }
 .callout strong { color: var(--teal); }
 
-/* Sources */
+/* Sources page. Each entry is one list item: the figure name in
+   bold, then the publisher and release in softer text. */
 .sources li { margin-bottom: 10px; }
 .sources .fig { font-weight: 700; }
 .sources .pub { color: var(--ink-soft); }
 
+/* Footer. Dark teal like the header, with pale text and white links. */
 footer.site {
   margin-top: 34px;
   background: var(--teal);
@@ -166,9 +217,12 @@ footer.site {
 footer.site a { color: #fff; }
 footer.site p { margin: .3rem 0; }
 
+/* Sections the router hides. */
 .hidden { display: none !important; }
 
-/* Responsive */
+/* Responsive. Below 900px the cards go two across and the
+   two-column grids stack. Below 560px the cards go single column,
+   the brand shrinks and the nav tabs get tighter. */
 @media (max-width: 900px) {
   .cards { grid-template-columns: 1fr 1fr; }
   .grid2 { grid-template-columns: 1fr; }

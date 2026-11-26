@@ -35,6 +35,9 @@
   /* --- Figures the site calculates from the published data ----------
      These are not new data: each one is arithmetic on figures already
      in data.js, and the page labels them as calculated. */
+  function sumBy(items, field) {
+    return items.reduce(function (total, item) { return total + item[field]; }, 0);
+  }
   var derived = {
     // Share of the year's population growth that came from migration.
     migrationShare: function () {
@@ -42,13 +45,11 @@
     },
     // Share of all exports the three biggest markets bought.
     topMarketsShare: function () {
-      var top = D.economy.topMarkets.reduce(function (a, m) { return a + m.value; }, 0);
-      return pct(top, D.economy.exportsTotal);
+      return pct(sumBy(D.economy.topMarkets, "value"), D.economy.exportsTotal);
     },
     // Share of all exports the top five products make up.
     topExportsShare: function () {
-      var top = D.economy.exports.reduce(function (a, e) { return a + e.value; }, 0);
-      return pct(top, D.economy.exportsTotal);
+      return pct(sumBy(D.economy.exports, "value"), D.economy.exportsTotal);
     },
     // Gap in years between non-Indigenous and First Nations life expectancy.
     lifeGap: function (female) {
@@ -62,18 +63,21 @@
     },
     // Average annual GDP growth across the five published years.
     avgGdpGrowth: function () {
-      var sum = D.economy.gdpGrowth.reduce(function (a, g) { return a + g.gdp; }, 0);
-      return (sum / D.economy.gdpGrowth.length).toFixed(1);
+      return (sumBy(D.economy.gdpGrowth, "gdp") / D.economy.gdpGrowth.length).toFixed(1);
     }
   };
 
-  /* Horizontal bar chart. items: [{label, value, display, cls}] */
+  /* Horizontal bar chart. items: [{label, value, display, cls}]
+     An empty list draws an empty chart rather than failing on the
+     maximum of no values. The label column is capped so a long
+     label can never push the bars off the right edge. */
   function hbarChart(items, opts) {
     opts = opts || {};
-    var W = 620, rowH = 34, top = 8, labelW = opts.labelW || 150;
+    var W = 620, rowH = 34, top = 8, labelW = Math.min(opts.labelW || 150, 260);
     var H = top + items.length * rowH + 8;
-    var max = Math.max.apply(null, items.map(function (i) { return i.value; }));
     var svg = makeSvg(W, H, opts.aria || "Bar chart");
+    if (items.length === 0) return svg;
+    var max = Math.max.apply(null, items.map(function (i) { return i.value; }));
     items.forEach(function (it, i) {
       var y = top + i * rowH;
       text(svg, 0, y + 17, it.label, "lbl");
