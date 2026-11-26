@@ -1,8 +1,8 @@
 # australia-in-numbers
 
-[![make.fun](https://make.fun/api/competitions/best-national-statistics-site-20261126-0539/badge)](https://make.fun/bounty/best-national-statistics-site-20261126-0539)
-[![make.fun rank](https://make.fun/api/competitions/best-national-statistics-site-20261126-0539/badge/rank)](https://make.fun/bounty/best-national-statistics-site-20261126-0539/leaderboard)
-[![make.fun reward](https://make.fun/api/competitions/best-national-statistics-site-20261126-0539/badge/reward)](https://make.fun/bounty/best-national-statistics-site-20261126-0539)
+[![make.fun · best-national-statistics-site-20261126-0539](https://make.fun/badge/best-national-statistics-site-20261126-0539.svg)](https://make.fun/bounty/best-national-statistics-site-20261126-0539?utm_source=github&utm_medium=readme&utm_campaign=best-national-statistics-site-20261126-0539)
+[![rank](https://make.fun/badge/best-national-statistics-site-20261126-0539/robertyygu-lab/australia-in-numbers/rank.svg)](https://make.fun/bounty/best-national-statistics-site-20261126-0539/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=best-national-statistics-site-20261126-0539)
+[![reward](https://make.fun/badge/best-national-statistics-site-20261126-0539/robertyygu-lab/australia-in-numbers/reward.svg)](https://make.fun/bounty/best-national-statistics-site-20261126-0539?utm_source=github&utm_medium=readme&utm_campaign=best-national-statistics-site-20261126-0539)
 
 Australia in Numbers is a fully offline static site that brings the country's headline statistics together in one place: population, economy, health, education and energy. Every figure comes from an official release — the ABS, DFAT, ACARA and the Department of Climate Change, Energy, the Environment and Water — and every derived figure (shares, gaps and averages) is computed in code from those published numbers, never typed.
 
